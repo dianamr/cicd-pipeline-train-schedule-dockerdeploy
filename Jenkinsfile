@@ -41,7 +41,7 @@ pipeline {
             steps {
                 input 'Deploy to Production?'
                 milestone(1)                       
-                withCredentials( credentialsID: ['prod-login']){
+                withCredentials( credentials: ['prod-login']){
                     script {
                         sh "ssh -o StrictHostKeyChecking=no jenkins@10.166.0.3 \"docker pull renatam/train-schedule:${env.BUILD_NUMBER}\""
                         try {
