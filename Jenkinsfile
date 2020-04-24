@@ -41,7 +41,8 @@ pipeline {
             steps {
                 input 'Deploy to Production?'
                 milestone(1)                       
-                sshagent (credentials: ['prod-login']) {
+                node {
+                    sshagent (credentials: ['prod-login']) {
                     script {
                         sh "ssh -o StrictHostKeyChecking=no jenkins@10.166.0.3 \"docker pull renatam/train-schedule:${env.BUILD_NUMBER}\""
                         try {
@@ -51,6 +52,7 @@ pipeline {
                             echo: 'caught error: $err'
                         }
                         sh "ssh -o StrictHostKeyChecking=no jenkins@10.166.0.3 \"docker run --restart always --name train-schedule -p 8080:8080 -d renatam/train-schedule:${env.BUILD_NUMBER}\""
+                        }                    
                     }
                 }
             }
