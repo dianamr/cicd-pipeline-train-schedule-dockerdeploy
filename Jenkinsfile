@@ -14,7 +14,7 @@ pipeline {
             }
             steps {
                 script {
-                    sh " sudo docker build renatam/train-schedule ."
+                    sh " sudo docker build $WORKSPACE@train-schedule/master renatam/train-schedule ."
                     app.inside {
                         sh 'echo $(curl localhost:8080)'
                     }
